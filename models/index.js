@@ -8,6 +8,11 @@ const appointmentSchema = new Schema({
     name: String,
     email: String,
     phone: Number,
+    slots: {
+        slot_time: String,
+        slot_date: String,
+        created_at: Date,
+    },
     created_at: Date
 })
 module.exports = mongoose.model('Appointments', appointmentSchema)
