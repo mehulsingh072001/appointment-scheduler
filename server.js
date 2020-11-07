@@ -21,7 +21,7 @@ app.all('/*', function(req, res, next){
 app.use(express.json())
 
 //use routes
-app.use('api/', appointment)
+app.use('/api/', appointment)
 
 //DB config
 const db = require('./config/keys').mongoURI;
