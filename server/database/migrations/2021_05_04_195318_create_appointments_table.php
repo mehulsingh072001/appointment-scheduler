@@ -17,9 +17,9 @@ class CreateAppointmentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            /* $table->integer('phone_number'); */
-            /* $table->time('slot_time'); */
-            /* $table->date('slot_date'); */
+            $table->integer('phone_number');
+            $table->string('slot_time');
+            $table->string('slot_date');
             $table->timestamps();
         });
     }
