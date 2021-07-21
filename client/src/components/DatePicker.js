@@ -14,8 +14,7 @@ function App() {
   }
   return (
     <div className="DatePicker">
-      <Calendar tileDisabled={({activeStartDate}) => activeStartDate} value={dateState} onChange={changeDate}/>
-      <p>Current selected date is <b></b></p>
+      <Calendar value={dateState} onChange={changeDate}/>
     </div>
   );
 }
