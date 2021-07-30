@@ -36,40 +36,6 @@ class CalendarController extends Controller
 
         $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
         $client->setAccessToken($accessToken['access_token']);
-
-        $event = new Google\Service\Calendar\Event(array(
-          'summary' => 'Google I/O 2015',
-          'location' => '800 Howard St., San Francisco, CA 94103',
-          'description' => 'A chance to hear more about Google\'s developer products.',
-          'start' => array(
-            'dateTime' => '2021-08-28T09:00:00-07:00',
-            'timeZone' => 'America/Los_Angeles',
-          ),
-          'end' => array(
-            'dateTime' => '2021-08-28T17:00:00-07:00',
-            'timeZone' => 'America/Los_Angeles',
-          ),
-          'recurrence' => array(
-            'RRULE:FREQ=DAILY;COUNT=2'
-          ),
-          'attendees' => array(
-            array('email' => 'singhrathoremehul@gmail.com'),
-            array('email' => 'mehulsingh072001@gmail.com'),
-          ),
-          'reminders' => array(
-            'useDefault' => FALSE,
-            'overrides' => array(
-              array('method' => 'email', 'minutes' => 24 * 60),
-              array('method' => 'popup', 'minutes' => 10),
-            ),
-          ),
-        ));
-
-        $calendarId = 'primary';
-        $service = new Google\Service\Calendar($client);
-
-        $event = $service->events->insert($calendarId, $event);
-        echo 'Event created: %s\n', $event->htmlLink;
     }
 
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Google;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
@@ -19,16 +20,6 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -40,31 +31,40 @@ class AppointmentController extends Controller
         $appointment->appointment_date = $request->appointment_date;
         $appointment->appointment_time = $request->appointment_time;
         $appointment->appointment_method = $request->appointment_method;
+        $appointment->name = $request->name;
+        $appointment->email = $request->email;
         $appointment->save();
-
         return response()->json(['status' => 'Success', 'message' => 'Appointment saved']);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+//        $event = new Google\Service\Calendar\Event(array(
+//          'summary' => 'Google I/O 2015',
+//          'location' => '800 Howard St., San Francisco, CA 94103',
+//          'description' => 'A chance to hear more about Google\'s developer products.',
+//          'start' => array(
+//            'dateTime' => $appointment->date,
+//            'timeZone' => 'America/Los_Angeles',
+//          ),
+//          'end' => array(
+//            'dateTime' => '2021-08-28T17:00:00-07:00',
+//            'timeZone' => 'America/Los_Angeles',
+//          ),
+//          'attendees' => array(
+//            array('email' => $request->email),
+//          ),
+//          'reminders' => array(
+//            'useDefault' => FALSE,
+//            'overrides' => array(
+//              array('method' => 'email', 'minutes' => 24 * 60),
+//              array('method' => 'popup', 'minutes' => 10),
+//            ),
+//          ),
+//        ));
+//
+//        $calendarId = 'primary';
+//        $service = new Google\Service\Calendar($client);
+//
+//        $event = $service->events->insert($calendarId, $event);
+//        echo 'Event created: %s\n', $event->htmlLink;
     }
 
     /**
