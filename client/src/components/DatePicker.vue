@@ -1,7 +1,6 @@
 <template>
   <div>
-    <button @click="getDaysInMonth(month, year)">Click</button>
-    <div v-for="day in days">
+    <div v-for="day in days" v-bind:key="day">
       <button id="day">{{day}}</button>
     </div>
   </div>
@@ -20,16 +19,18 @@ export default {
     getDaysInMonth: function(month, year) {
       var date = new Date(year, month, 1);
       while(date.getMonth() === month){
-        this.days.push(new Date(date));
+        this.days.push(date.getDate());
         date.setDate(date.getDate() + 1);
       }
       console.log(this.month)
+      console.log(this.days)
     }
   },
   mounted() {
       var d = new Date()
       this.month = d.getMonth()
       this.year = d.getFullYear()
+      this.getDaysInMonth(this.month, this.year)
   }
 }
 </script>
