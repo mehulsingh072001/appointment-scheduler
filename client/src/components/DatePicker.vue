@@ -52,7 +52,7 @@ export default {
       var d = new Date()
       this.month = d.getMonth()
       this.year = d.getFullYear()
-      this.getDatesInMonth(this.month, this.year)
+      this.getDatesInMonth(11, 2020)
       this.getDaysOfDates()
       this.fixArrayLength()
       this.emptySpace()
@@ -89,6 +89,7 @@ export default {
          var date_to_str = date.toString()
          var strings = []
          strings.push(date_to_str.trim().split(" "));
+         console.log(strings)
          for(let i = 0; i < strings.length; i++){
            if(strings[i][0] == 'Mon'){
              this.mon.push(strings[i][2])
@@ -119,29 +120,40 @@ export default {
     },
     
     fixArrayLength: function(){
-      if(this.sun.length == 4){
-        this.sun.unshift(" ")
-      }
-      if(this.mon.length == 4){
-        this.mon.unshift(" ")
-      }
-      if(this.tue.length == 4){
-        this.tue.unshift(" ")
-      }
-      if(this.wed.length == 4){
-        this.wed.unshift(" ")
-      }
-      if(this.thu.length == 4){
-        this.thu.unshift(" ")
-      }
-      if(this.fri.length == 4){
-        this.fri.unshift(" ")
-      }
-      if(this.sat.length == 4){
-        this.sat.unshift(" ")
-      }
-      else{
-        return null
+      for(let i = 0; i < this.sun.length; i++){
+        if(this.sun[i] == '01'){
+          this.mon.unshift(" ")
+          this.tue.unshift(" ")
+          this.wed.unshift(" ")
+          this.thu.unshift(" ")
+          this.fri.unshift(" ")
+          this.sat.unshift(" ")
+        }
+        if(this.tue[i] == '01'){
+          this.mon.unshift(" ")
+        }
+        if(this.wed[i] == '01'){
+          this.mon.unshift(" ")
+          this.tue.unshift(" ")
+        }
+        if(this.thu[i] == '01'){
+          this.mon.unshift(" ")
+          this.tue.unshift(" ")
+          this.wed.unshift(" ")
+        }
+        if(this.fri[i] == '01'){
+          this.mon.unshift(" ")
+          this.tue.unshift(" ")
+          this.wed.unshift(" ")
+          this.thu.unshift(" ")
+        }
+        if(this.sat[i] == '01'){
+          this.mon.unshift(" ")
+          this.tue.unshift(" ")
+          this.wed.unshift(" ")
+          this.thu.unshift(" ")
+          this.fri.unshift(" ")
+        }
       }
     },
 
