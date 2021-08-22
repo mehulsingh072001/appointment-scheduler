@@ -1,49 +1,46 @@
 <template>
   <div class="container">
-    <h1>{{this.month}}</h1>
-    <button @click="next">Next</button>
-    <button>Prev</button>
     <div class="dates">
       <div class="button">
         <p class="day">Mon</p>
         <div class="col-day" v-for="date in this.mon" v-bind:key="date.id">
-          <button class="btn" id="btn-mon">{{date}}</button>
+          <button @click="submit" class="btn" :value="date" id="btn-mon">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Tue</p>
         <div class="col-day" v-for="date in this.tue" v-bind:key="date.id">
-          <button class="btn" id="btn-tue">{{date}}</button>
+          <button @click="submit" class="btn" :value="date" id="btn-tue">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Wed</p>
         <div class="col-day" v-for="date in this.wed" v-bind:key="date.id">
-          <button class="btn" id="btn-wed">{{date}}</button>
+          <button @click="submit" class="btn" :value="date" id="btn-wed">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Thu</p>
         <div class="col-day" v-for="date in this.thu" v-bind:key="date.id">
-          <button class="btn" id="btn-thu">{{date}}</button>
+          <button @click="submit" class="btn" :value="date" id="btn-thu">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Fri</p>
         <div class="col-day" v-for="date in this.fri" v-bind:key="date.id">
-          <button class="btn" id="btn-fri">{{date}}</button>
+          <button @click="submit" class="btn" :value="date" id="btn-fri">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Sat</p>
         <div class="col-day" v-for="date in this.sat" v-bind:key="date.id">
-          <button class="btn" id="btn-sat">{{date}}</button>
+          <button @click="submit" class="btn" :value="date" id="btn-sat">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Sun</p>
         <div class="col-day" v-for="date in this.sun" v-bind:key="date.id">
-          <button class="btn" id="btn-sun">{{date}}</button>
+          <button @click="submit" class="btn" :value="date" id="btn-sun">{{date}}</button>
         </div>
       </div>
     </div>
@@ -62,11 +59,6 @@ export default {
       this.fixArrayLength()
       this.emptySpace()
   },
-  watch:{
-    next: function(){
-      return  this.month++
-    },
-  },
 
   data(){
     return{
@@ -80,18 +72,10 @@ export default {
       thu: [],
       fri: [],
       sat: [],
-      empty: false
     }
   },
 
   methods:{
-    next: function(){
-      this.month += 1
-    },
-    prev: function(){
-      this.month -= 1
-    },
-
     getDatesInMonth: function() {
       var date = new Date(this.year, this.month);
       while(date.getMonth() === this.month){
@@ -106,7 +90,6 @@ export default {
          var date_to_str = date.toString()
          var strings = []
          strings.push(date_to_str.trim().split(" "));
-         console.log(strings)
          for(let i = 0; i < strings.length; i++){
            if(strings[i][0] == 'Mon'){
              this.mon.push(strings[i][2])
@@ -208,6 +191,19 @@ export default {
             console.log(false)
           }
       })
+    },
+
+    submit: function(e){
+        const buttonValue = e.target.value
+        console.log(buttonValue)
+//        var btn_mon = document.getElementById('btn-mon')
+//
+//        if(btn_mon.value === ''){
+//          console.log(true)
+//        }
+//        else{
+//          console.log(false)
+//        }
     }
   },
 }
