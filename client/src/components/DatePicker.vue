@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1>{{this.$store.state.month}}</h1>
+    <button @click="next">Next</button>
     <div class="dates">
       <div class="button">
         <p class="day">Mon</p>
@@ -54,9 +55,8 @@ import {mapGetters} from 'vuex'
 
 export default {
   mounted() {
-      var d = new Date()
-      this.year = d.getFullYear()
       this.getCurrentMonth()
+      this.getCurrentYear()
       this.getDatesInMonth()
       this.getDaysOfDates()
       this.fixArrayLength()
@@ -64,8 +64,6 @@ export default {
   },
   data(){
     return{
-      year: "",
-      dates: [],
       sun: [],
       mon: [],
       tue: [],
@@ -78,25 +76,34 @@ export default {
   },
 
   computed:{
-    ...mapGetters(['getMonth'])
+    ...mapGetters(['getMonth', 'getYear', 'getDates']),
+    itemsGet(){
+      return this.$store.getters.getDates
+    },
+    itemsDirect(){
+      return this.$store.state.dates
+    }
   },
 
   methods:{
     getCurrentMonth: function(){
       this.$store.dispatch('getCurrentMonth')
     },
+    getCurrentYear: function(){
+      this.$store.dispatch('getCurrentYear')
+    },
     getDatesInMonth: function() {
-      var date = new Date(this.year, this.$store.state.month);
-      while(date.getMonth() === this.$store.state.month){
-        this.dates.push(new Date(date));
-        date.setDate(date.getDate() + 1);
-      }
-      console.log(this.$store.state.month)
+      this.$store.dispatch('getDatesInMonth')
+      console.log(this.$store.state.dates)
+    },
+    next: function() {
+      this.$store.dispatch('getDatesInNextMonth')
+      console.log(this.$store.state.dates)
     },
 
     getDaysOfDates: function(){
-       for (let i = 0; i < this.dates.length; i++) {
-         var date = new Date(this.dates[i])
+       for (let i = 0; i < this.$store.state.dates.length; i++) {
+         var date = new Date(this.$store.state.dates[i])
          var date_to_str = date.toString()
          var strings = []
          strings.push(date_to_str.trim().split(" "));
