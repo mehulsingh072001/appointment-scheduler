@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <h1>{{this.month}}</h1>
-    <button @click="next">Next</button>
-    <button>Prev</button>
+    <h1>{{this.$store.state.month}}</h1>
     <div class="dates">
       <div class="button">
         <p class="day">Mon</p>
@@ -52,25 +50,20 @@
 
 <script>
 import Vue from 'vue'
+import {mapGetters} from 'vuex'
+
 export default {
   mounted() {
       var d = new Date()
-      this.month = d.getMonth()
       this.year = d.getFullYear()
+      this.getCurrentMonth()
       this.getDatesInMonth()
       this.getDaysOfDates()
       this.fixArrayLength()
       this.emptySpace()
   },
-  watch:{
-    next: function(){
-      return  this.month++
-    },
-  },
-
   data(){
     return{
-      month: "",
       year: "",
       dates: [],
       sun: [],
@@ -84,20 +77,21 @@ export default {
     }
   },
 
-  methods:{
-    next: function(){
-      this.month += 1
-    },
-    prev: function(){
-      this.month -= 1
-    },
+  computed:{
+    ...mapGetters(['getMonth'])
+  },
 
+  methods:{
+    getCurrentMonth: function(){
+      this.$store.dispatch('getCurrentMonth')
+    },
     getDatesInMonth: function() {
-      var date = new Date(this.year, this.month);
-      while(date.getMonth() === this.month){
+      var date = new Date(this.year, this.$store.state.month);
+      while(date.getMonth() === this.$store.state.month){
         this.dates.push(new Date(date));
         date.setDate(date.getDate() + 1);
       }
+      console.log(this.$store.state.month)
     },
 
     getDaysOfDates: function(){
@@ -106,7 +100,6 @@ export default {
          var date_to_str = date.toString()
          var strings = []
          strings.push(date_to_str.trim().split(" "));
-         console.log(strings)
          for(let i = 0; i < strings.length; i++){
            if(strings[i][0] == 'Mon'){
              this.mon.push(strings[i][2])
