@@ -221,8 +221,10 @@ export default {
     },
 
     submit: function(){
-        axios.post('http://localhost:8000/api/appointments', {appointment_date: this.dateValue,
-          appointment_time: this.timeValue, name: this.name, email: this.email}).then(console.log('success'))
+      var dateTime = new Date(this.year, this.month, this.dateValue)
+      console.log(dateTime.toJSON())
+        axios.post('http://localhost:8000/api/appointments', {appointment_date_time: dateTime,
+          name: this.name, email: this.email}).then((res) => console.log(res.json))
     }
   },
 }
