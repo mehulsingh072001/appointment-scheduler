@@ -17,7 +17,6 @@ class Appointments extends Migration
             $table->bigIncrements('appointment_id');
             $table->string('appointment_date');
             $table->string('appointment_time');
-            $table->string('appointment_method');
             $table->string('name');
             $table->string('email');
             $table->timestamps();

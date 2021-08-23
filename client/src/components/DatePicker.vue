@@ -4,62 +4,66 @@
       <div class="button">
         <p class="day">Mon</p>
         <div class="col-day" v-for="date in this.mon" v-bind:key="date.id">
-          <button @click="submit" class="btn" :value="date" id="btn-mon">{{date}}</button>
+          <button @click="setDate" class="btn" :value="date" id="btn-mon">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Tue</p>
         <div class="col-day" v-for="date in this.tue" v-bind:key="date.id">
-          <button @click="submit" class="btn" :value="date" id="btn-tue">{{date}}</button>
+          <button @click="setDate" class="btn" :value="date" id="btn-tue">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Wed</p>
         <div class="col-day" v-for="date in this.wed" v-bind:key="date.id">
-          <button @click="submit" class="btn" :value="date" id="btn-wed">{{date}}</button>
+          <button @click="setDate" class="btn" :value="date" id="btn-wed">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Thu</p>
         <div class="col-day" v-for="date in this.thu" v-bind:key="date.id">
-          <button @click="submit" class="btn" :value="date" id="btn-thu">{{date}}</button>
+          <button @click="setDate" class="btn" :value="date" id="btn-thu">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Fri</p>
         <div class="col-day" v-for="date in this.fri" v-bind:key="date.id">
-          <button @click="submit" class="btn" :value="date" id="btn-fri">{{date}}</button>
+          <button @click="setDate" class="btn" :value="date" id="btn-fri">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Sat</p>
         <div class="col-day" v-for="date in this.sat" v-bind:key="date.id">
-          <button @click="submit" class="btn" :value="date" id="btn-sat">{{date}}</button>
+          <button @click="setDate" class="btn" :value="date" id="btn-sat">{{date}}</button>
         </div>
       </div>
       <div class="button">
         <p class="day">Sun</p>
         <div class="col-day" v-for="date in this.sun" v-bind:key="date.id">
-          <button @click="submit" class="btn" :value="date" id="btn-sun">{{date}}</button>
+          <button @click="setDate" class="btn" :value="date" id="btn-sun">{{date}}</button>
         </div>
       </div>
     </div>
+    <div class="time">
+      <button @click="setTime" value="4 PM">4 PM</button>
+      <button @click="setTime" value="12 PM">12 PM</button>
+      <button @click="setTime" value="3 PM">3 PM</button>
+    </div>
+
+    <form action="">
+      <input type="text" v-model="name" placeholder="Name">
+      <input type="email" v-model="email" placeholder="E-Mail">
+    </form>
+
+    <button class="submit" @click="submit">Submit</button>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-export default {
-  mounted() {
-      var d = new Date()
-      this.month = d.getMonth()
-      this.year = d.getFullYear()
-      this.getDatesInMonth()
-      this.getDaysOfDates()
-      this.fixArrayLength()
-      this.emptySpace()
-  },
+import axios from 'axios'
 
+export default {
   data(){
     return{
       month: "",
@@ -72,7 +76,21 @@ export default {
       thu: [],
       fri: [],
       sat: [],
+      dateValue: "",
+      timeValue: "",
+      name: "",
+      email: ""
     }
+  },
+
+  mounted() {
+      var d = new Date()
+      this.month = d.getMonth()
+      this.year = d.getFullYear()
+      this.getDatesInMonth()
+      this.getDaysOfDates()
+      this.fixArrayLength()
+      this.emptySpace()
   },
 
   methods:{
@@ -193,17 +211,18 @@ export default {
       })
     },
 
-    submit: function(e){
-        const buttonValue = e.target.value
-        console.log(buttonValue)
-//        var btn_mon = document.getElementById('btn-mon')
-//
-//        if(btn_mon.value === ''){
-//          console.log(true)
-//        }
-//        else{
-//          console.log(false)
-//        }
+    setDate: function(e){
+      this.dateValue = e.target.value
+      console.log(this.dateValue)
+    },
+    setTime: function(e){
+      this.timeValue = e.target.value
+      console.log(this.timeValue)
+    },
+
+    submit: function(){
+        axios.post('http://localhost:8000/api/appointments', {appointment_date: this.dateValue,
+          appointment_time: this.timeValue, name: this.name, email: this.email}).then(console.log('success'))
     }
   },
 }

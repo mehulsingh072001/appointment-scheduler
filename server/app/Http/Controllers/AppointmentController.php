@@ -30,7 +30,6 @@ class AppointmentController extends Controller
         $appointment = new Appointment();
         $appointment->appointment_date = $request->appointment_date;
         $appointment->appointment_time = $request->appointment_time;
-        $appointment->appointment_method = $request->appointment_method;
         $appointment->name = $request->name;
         $appointment->email = $request->email;
         $appointment->save();

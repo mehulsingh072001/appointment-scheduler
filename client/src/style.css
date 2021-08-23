@@ -23,6 +23,6 @@ body{
     padding: 40rem;
 }
 
-button{
+.btn{
     cursor: pointer;
 }
