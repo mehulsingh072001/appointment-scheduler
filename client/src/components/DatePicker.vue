@@ -78,6 +78,7 @@ export default {
       sat: [],
       dateValue: "",
       timeValue: "",
+      timezone: "",
       name: "",
       email: ""
     }
@@ -85,6 +86,8 @@ export default {
 
   mounted() {
       var d = new Date()
+      this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      console.log(this.timezone)
       this.month = d.getMonth()
       this.year = d.getFullYear()
       this.getDatesInMonth()
@@ -222,7 +225,6 @@ export default {
 
     submit: function(){
       var dateTime = new Date(this.year, this.month, this.dateValue)
-      console.log(dateTime.toJSON())
         axios.post('http://localhost:8000/api/appointments', {appointment_date_time: dateTime,
           name: this.name, email: this.email}).then((res) => console.log(res.json))
     }

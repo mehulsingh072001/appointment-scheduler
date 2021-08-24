@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Google;
+use GuzzleHttp\Cookie\SetCookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Symfony\Component\HttpFoundation\Response;
 
 class CalendarController extends Controller
 {
@@ -22,20 +24,40 @@ class CalendarController extends Controller
         $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/api/redirect');
         $client->setAccessType('offline');        // offline access
         $client->setIncludeGrantedScopes(true);   // incremental auth
+        $client->setPrompt('select_account consent');
+
 
         $auth_url = $client->createAuthUrl();
         return redirect()->to($auth_url);
     }
 
-    public function redirect()
+    public function redirect(Request $request)
     {
         $credentialsPath = storage_path('keys/client_secret_917561590462-mjm99i957992qb6na831cbaq98vtlfbj.apps.googleusercontent.com.json');
         $client = new Google\Client();
         $client->setAuthConfig($credentialsPath);
         $client->addScope(Google\Service\Calendar::CALENDAR);
-
-        $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-        $client->setAccessToken($accessToken['access_token']);
+        
+        //set access token
+      $tokenPath = storage_path('keys/token.json');
+      if(file_exists($tokenPath)){
+          $accessToken = json_decode(file_get_contents($tokenPath), true);
+          $client->setAccessToken($accessToken);
+        }
+        if($client->isAccessTokenExpired()){
+          if($client->getRefreshToken()){
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+          }else{
+            $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+            $client->setAccessToken($accessToken);
+          }
+             // Save the token to a file.
+        if (!file_exists(dirname($tokenPath))) {
+            mkdir(dirname($tokenPath), 0700, true);
+        }
+        file_put_contents($tokenPath, json_encode($client->getAccessToken()));
+      }
+        return json_decode(file_get_contents($tokenPath), true);
     }
 
 
@@ -44,9 +66,8 @@ class CalendarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
     }
 
     /**
