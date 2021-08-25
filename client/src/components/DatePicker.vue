@@ -45,9 +45,9 @@
       </div>
     </div>
     <div class="time">
-      <button @click="setTime" value="4 PM">4 PM</button>
-      <button @click="setTime" value="12 PM">12 PM</button>
-      <button @click="setTime" value="3 PM">3 PM</button>
+      <button @click="setTime" value="16:00">4:00 PM</button>
+      <button @click="setTime" value="12:00">12:00 PM</button>
+      <button @click="setTime" value="15:00">3:00 PM</button>
     </div>
 
     <form action="">
@@ -224,9 +224,10 @@ export default {
     },
 
     submit: function(){
-      var dateTime = new Date(this.year, this.month, this.dateValue)
-        axios.post('http://localhost:8000/api/appointments', {appointment_date_time: dateTime,
-          name: this.name, email: this.email}).then((res) => console.log(res.json))
+      this.month = this.month+1
+      var dateTime = new Date(this.year + '-' + this.month + '-' + this.dateValue + ' ' + this.timeValue)
+      axios.post('http://localhost:8000/api/appointments', {appointment_date_time: dateTime,
+        timezone: this.timezone, name: this.name, email: this.email}).then((res) => console.log(res.json))
     }
   },
 }
