@@ -11,6 +11,7 @@ function App() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [dates, setDates] = useState([])
+  const [bool, setBool] = useState(false)
   const [sun, setSun] = useState([])
   const [mon, setMon] = useState([])
   const [tue, setTue] = useState([])
@@ -21,13 +22,9 @@ function App() {
 
   useEffect(() => {
     setMonthYear()
-    getDatesInMonth()
-  }, [month, year])
+    getDatesInMonth(month, year)
+  }, [month, year, dates])
 
-  useEffect(() => {
-  })
-
-  
   const setMonthYear = () => {
     var d = new Date()
     setMonth(d.getMonth())
@@ -62,7 +59,7 @@ function App() {
 
   return (
     <div className="App">
-      {dates.map(function(date, index) {
+      {dates && dates.map(function(date, index) {
         return <h2 key={index}>{date}</h2>
       })}
     </div>
