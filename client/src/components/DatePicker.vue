@@ -56,6 +56,7 @@
     </form>
 
     <button class="submit" @click="submit">Submit</button>
+    <button @click="next">{{this.month}}</button>
   </div>
 </template>
 
@@ -95,17 +96,35 @@ export default {
       this.fixArrayLength()
       this.emptySpace()
   },
+  watch: {
+    getDates(){
+      this.dates = this.sun
+      this.dates = this.mon
+      this.dates = this.tue
+      this.dates = this.wed
+      this.dates = this.thu
+      this.dates = this.fri
+      this.dates = this.sat
+    }
+  },
 
   methods:{
     getDatesInMonth: function() {
       var date = new Date(this.year, this.month);
+      this.dates = []
       while(date.getMonth() === this.month){
         this.dates.push(new Date(date));
         date.setDate(date.getDate() + 1);
       }
     },
-
     getDaysOfDates: function(){
+      this.sun = []
+      this.mon = []
+      this.tue = []
+      this.wed = []
+      this.thu = []
+      this.fri = []
+      this.sat = []
        for (let i = 0; i < this.dates.length; i++) {
          var date = new Date(this.dates[i])
          var date_to_str = date.toString()
@@ -212,6 +231,12 @@ export default {
             console.log(false)
           }
       })
+    },
+
+    next: function(){
+      this.month++
+        this.getDatesInMonth()
+      this.getDaysOfDates()
     },
 
     setDate: function(e){
