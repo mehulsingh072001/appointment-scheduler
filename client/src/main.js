@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
+import 'document-register-element/build/document-register-element'
 
-Vue.config.productionTip = false
+import vueCustomElement from 'vue-custom-element'
 
-new Vue({
-  store,
-  render: h => h(App)
-}).$mount('#app')
+Vue.use(vueCustomElement)
+
+App.store = store
+Vue.customElement('vue-widget', App)

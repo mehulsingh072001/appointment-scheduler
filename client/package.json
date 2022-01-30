@@ -10,8 +10,11 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "document-register-element": "^1.14.10",
     "vue": "^2.6.11",
-    "vuex": "^3.4.0"
+    "vue-custom-element": "^3.3.0",
+    "vuex": "^3.4.0",
+    "webpack": "^5.62.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
